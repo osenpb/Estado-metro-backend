@@ -22,7 +22,7 @@ public class DataInit implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        // Paso 1: Crear y guardar los Status si no existen
+
         if (statusRepository.findAll().isEmpty()) {
             List<Status> statusList = List.of(
                     new Status(null, "VACIO"),
@@ -32,11 +32,10 @@ public class DataInit implements CommandLineRunner {
             statusRepository.saveAll(statusList);
         }
 
-        // Buscar el Status "VACIO" desde la base de datos
+
         Status statusVacio = statusRepository.findById(1L)
                 .orElseThrow(() -> new IllegalStateException("Status VACIO no encontrado"));
 
-        // Paso 2: Crear y guardar las estaciones
         if (stationRepository.findAll().isEmpty()) {
             List<Station> estaciones = List.of(
                     new Station(null, "Chimpu Ocllo", statusVacio),
