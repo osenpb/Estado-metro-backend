@@ -42,7 +42,6 @@ public class StationController {
     public ResponseEntity<Station> getMostVotedStatusByStation(@RequestParam String stationName) {
         String mostVotedStatus = reportService.findStatusMostVotedByStationName(stationName);
         Station foundStation = stationService.findByStationName(stationName);
-
         Status newStatus = statusService.findByStatusName(mostVotedStatus);
 
         log.info("Estatus conseguido: {}", newStatus);

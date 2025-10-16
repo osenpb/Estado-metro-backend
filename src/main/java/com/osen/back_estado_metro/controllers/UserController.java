@@ -30,11 +30,9 @@ public class UserController {
         String email = loginRequestDTO.email();
         String password = loginRequestDTO.password();
 
-        User foundUser = userService.findByEmail(email); // podria ser optional en el service
+        User foundUser = userService.findByEmail(email); // podria ser optional en el service O.o
         String passwordUser = foundUser.getPassword();
         Boolean checker = passwordEncoder.matches(password, passwordUser);
-
-        log.info("Contrasenña encontrada: {}", passwordUser);
 
         if(email.equals(foundUser.getEmail()) && checker) {
             return ResponseEntity.ok(foundUser.getId()); // xD
