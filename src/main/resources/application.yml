@@ -3,9 +3,9 @@ spring:
     name: back_estado_metro
 
   datasource:
-    url: jdbc:mysql://${DB_HOST}:${DB_PORT}/${DB_NAME}?useSSL=false&serverTimezone=UTC
-    username: ${DB_USER}
-    password: ${DB_PASSWORD}
+    url: jdbc:mysql://localhost:3306/estado_metro?useSSL=false&serverTimezone=UTC
+    username: root
+    password: mysql
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:

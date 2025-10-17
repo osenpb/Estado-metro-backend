@@ -1,7 +1,9 @@
 package com.osen.back_estado_metro.config;
 
+import com.osen.back_estado_metro.models.Role;
 import com.osen.back_estado_metro.models.Station;
 import com.osen.back_estado_metro.models.Status;
+import com.osen.back_estado_metro.repositories.RoleRepository;
 import com.osen.back_estado_metro.repositories.StationRepository;
 import com.osen.back_estado_metro.repositories.StatusRepository;
 import org.springframework.boot.CommandLineRunner;
@@ -14,10 +16,12 @@ public class DataInit implements CommandLineRunner {
 
     private final StationRepository stationRepository;
     private final StatusRepository statusRepository;
+    private final RoleRepository roleRepository;
 
-    public DataInit(StationRepository stationRepository, StatusRepository statusRepository) {
+    public DataInit(StationRepository stationRepository, StatusRepository statusRepository, RoleRepository roleRepository) {
         this.stationRepository = stationRepository;
         this.statusRepository = statusRepository;
+        this.roleRepository = roleRepository;
     }
 
     @Override
@@ -30,6 +34,15 @@ public class DataInit implements CommandLineRunner {
                     new Status(null, "LLENO")
             );
             statusRepository.saveAll(statusList);
+        }
+
+        if(roleRepository.findAll().isEmpty()) {
+            List<Role> roleList = List.of(
+                    new Role(null, "USER"),
+                    new Role(null, "ADMIN")
+                    );
+
+            roleRepository.saveAll(roleList);
         }
 
 

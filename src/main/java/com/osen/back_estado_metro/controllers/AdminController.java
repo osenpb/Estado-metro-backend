@@ -107,10 +107,9 @@ public class AdminController {
             return ResponseEntity.ok().headers(headers).body(baos.toByteArray());
 
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("Error al generar el reporte");
             return ResponseEntity.internalServerError().build();
         }
     }
-
-
+    
 }

@@ -1,7 +1,9 @@
 package com.osen.back_estado_metro.services.impl;
 
 import com.osen.back_estado_metro.handlerException.UserNotFoundException;
+import com.osen.back_estado_metro.models.Role;
 import com.osen.back_estado_metro.models.User;
+import com.osen.back_estado_metro.repositories.RoleRepository;
 import com.osen.back_estado_metro.repositories.UserRepository;
 import com.osen.back_estado_metro.services.UserService;
 import jakarta.persistence.EntityNotFoundException;
@@ -16,10 +18,12 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final RoleRepository roleRepository;
 
-    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, RoleRepository roleRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.roleRepository = roleRepository;
     }
 
     @Override
@@ -34,8 +38,9 @@ public class UserServiceImpl implements UserService {
         if(userRepository.findByEmail(email).isPresent()) {
             throw new IllegalArgumentException("Este correo ya esta registrado");
         }
-
+        Role roleUser = roleRepository.findById(1L).orElseThrow(()-> new RuntimeException("Rol no encontrado"));
         String passwordEncoded = passwordEncoder.encode(user.getPassword());
+        user.setRole(roleUser);
         user.setPassword(passwordEncoded);
         return userRepository.save(user);
     }
