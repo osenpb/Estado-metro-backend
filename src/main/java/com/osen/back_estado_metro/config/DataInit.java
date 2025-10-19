@@ -3,9 +3,11 @@ package com.osen.back_estado_metro.config;
 import com.osen.back_estado_metro.models.Role;
 import com.osen.back_estado_metro.models.Station;
 import com.osen.back_estado_metro.models.Status;
+import com.osen.back_estado_metro.models.User;
 import com.osen.back_estado_metro.repositories.RoleRepository;
 import com.osen.back_estado_metro.repositories.StationRepository;
 import com.osen.back_estado_metro.repositories.StatusRepository;
+import com.osen.back_estado_metro.repositories.UserRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -17,11 +19,13 @@ public class DataInit implements CommandLineRunner {
     private final StationRepository stationRepository;
     private final StatusRepository statusRepository;
     private final RoleRepository roleRepository;
+    private final UserRepository userRepository;
 
-    public DataInit(StationRepository stationRepository, StatusRepository statusRepository, RoleRepository roleRepository) {
+    public DataInit(StationRepository stationRepository, StatusRepository statusRepository, RoleRepository roleRepository, UserRepository userRepository) {
         this.stationRepository = stationRepository;
         this.statusRepository = statusRepository;
         this.roleRepository = roleRepository;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -98,6 +102,16 @@ public class DataInit implements CommandLineRunner {
             );
 
             stationRepository.saveAll(estaciones);
+        }
+
+        Role userRole = roleRepository.findById(1L).orElseThrow();
+        Role adminRole = roleRepository.findById(2L).orElseThrow();
+
+        if(userRepository.findAll().isEmpty()) {
+            List<User> userList = List.of(new User(null, "user", "user@user.com", "user", userRole),
+                    new User(null, "admin", "admin@admin.com", "admin", adminRole));
+
+            userRepository.saveAll(userList);
         }
     }
 }

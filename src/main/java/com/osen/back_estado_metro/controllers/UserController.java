@@ -32,10 +32,10 @@ public class UserController {
 
         User foundUser = userService.findByEmail(email); // podria ser optional en el service O.o
         String passwordUser = foundUser.getPassword();
-        Boolean checker = passwordEncoder.matches(password, passwordUser);
+        boolean checker = passwordEncoder.matches(password, passwordUser);
 
         if(email.equals(foundUser.getEmail()) && checker) {
-            return ResponseEntity.ok(foundUser.getId()); // xD
+            return ResponseEntity.ok(foundUser.getId());
         }
 
         log.info("No se encontro al usuario D:");
