@@ -17,7 +17,7 @@ public class Report {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "report_id")
+    @Column(name = "report_id") // esta anotacion solo configura el nombre para la bd, no para el json
     private Long id;
 
     @ManyToOne

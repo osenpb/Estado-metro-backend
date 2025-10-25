@@ -35,12 +35,11 @@ public class UserController {
         boolean checker = passwordEncoder.matches(password, passwordUser);
 
         if(email.equals(foundUser.getEmail()) && checker) {
-            return ResponseEntity.ok(foundUser.getId());
+            return ResponseEntity.ok(foundUser); // .getId()
         }
 
         log.info("No se encontro al usuario D:");
         return ResponseEntity.badRequest().build();
-
     }
 
     @GetMapping
