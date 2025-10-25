@@ -9,6 +9,7 @@ import com.osen.back_estado_metro.repositories.StationRepository;
 import com.osen.back_estado_metro.repositories.StatusRepository;
 import com.osen.back_estado_metro.repositories.UserRepository;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -20,12 +21,14 @@ public class DataInit implements CommandLineRunner {
     private final StatusRepository statusRepository;
     private final RoleRepository roleRepository;
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public DataInit(StationRepository stationRepository, StatusRepository statusRepository, RoleRepository roleRepository, UserRepository userRepository) {
+    public DataInit(StationRepository stationRepository, StatusRepository statusRepository, RoleRepository roleRepository, UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.stationRepository = stationRepository;
         this.statusRepository = statusRepository;
         this.roleRepository = roleRepository;
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -107,7 +110,7 @@ public class DataInit implements CommandLineRunner {
         Role roleAdmin = roleRepository.findById(2L).orElseThrow();
 
         if(userRepository.findAll().isEmpty()) {
-            User userAdmin = new User(null, "admin", "admin@admin.com", "admin", roleAdmin);
+            User userAdmin = new User(null, "admin", "admin@admin.com", passwordEncoder.encode("admin"), roleAdmin);
 
             userRepository.save(userAdmin);
         }
