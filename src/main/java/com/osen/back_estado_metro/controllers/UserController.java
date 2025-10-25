@@ -30,7 +30,7 @@ public class UserController {
         String email = loginRequestDTO.email();
         String password = loginRequestDTO.password();
 
-        User foundUser = userService.findByEmail(email); 
+        User foundUser = userService.findByEmail(email);
         String passwordUser = foundUser.getPassword();
         boolean checker = passwordEncoder.matches(password, passwordUser);
 

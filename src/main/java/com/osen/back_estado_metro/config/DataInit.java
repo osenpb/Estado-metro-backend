@@ -104,5 +104,10 @@ public class DataInit implements CommandLineRunner {
             stationRepository.saveAll(estaciones);
         }
 
+        Role roleAdmin = roleRepository.findById(2L).orElseThrow();
+
+        if(userRepository.findAll().isEmpty()) {
+            User userAdmin = new User(null, "admin", "admin@admin.com", "admin", roleAdmin);
+        }
     }
 }
